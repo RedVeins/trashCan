@@ -1,0 +1,17 @@
+#include "TXLib.h"
+
+int main()
+{
+    int a = 300;
+    int b = 400;
+    txCreateWindow(800, 600);
+    for(int r = 200; r > 0; r = r - 2)
+    {
+        txSetColor(RGB(255 - 225*r/200, 0, 255 - 225*r/200));
+        txSetFillColor(RGB(255 - 225*r/200, 0, 255 - 225*r/200));
+        a = a - 1;
+        b = b - 1;
+        txCircle(b, a, r);
+    }
+    return 0;
+}
