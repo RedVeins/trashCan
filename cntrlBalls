@@ -9,6 +9,7 @@ void newBall(int x, int y, int R, int clrR, int clrG, int clrB)
         txSetColor(RGB(clrR - clrR*r/R, clrG - clrG*r/R, clrB - clrB*r/R));
         txSetFillColor(RGB(clrR - clrR*r/R, clrG - clrG*r/R, clrB - clrB*r/R));
         txCircle(x, y, r);
+        txSetFillColor(RGB(0, 0, 0));
     }
 }
 
@@ -60,7 +61,6 @@ int main()
 
     for (;;)
     {
-        txSetFillColor(RGB(0, 0, 0));
         txClear();
 
         newBall(x, y, r, 200, 50, 200);
