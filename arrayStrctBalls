@@ -91,7 +91,6 @@ int main()
         for (int i = 0; i < 15; i += 1)
         {
             newBall(ball[i]);
-            cntrlBall(&ball[i]);
             moveBall(&ball[i]);
             txSetFillColor(RGB(0, 0, 0));
 
