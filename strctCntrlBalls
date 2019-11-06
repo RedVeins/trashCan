@@ -58,9 +58,6 @@ void collide(Ball* ball1, Ball* ball2)
     }
 }
 
-
-
-
 int main()
 {
     txCreateWindow(600, 400);
