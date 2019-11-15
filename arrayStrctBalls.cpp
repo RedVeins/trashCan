@@ -18,7 +18,7 @@ struct Ball
 
 void newBall(Ball ball)
 {
-    for(int i = ball.r; ball.r > 0; ball.r = ball.r - 2)
+    for(int i = ball.r; i > 0; i = i - 2)
     {
         txSetColor(RGB(ball.clrR - ball.clrR * ball.r / i, ball.clrG - ball.clrG * ball.r / i, ball.clrB - ball.clrB * ball.r / i));
         txSetFillColor(RGB(ball.clrR - ball.clrR * ball.r / i, ball.clrG - ball.clrG * ball.r / i, ball.clrB - ball.clrB * ball.r / i));
