@@ -20,8 +20,8 @@ void newBall(Ball ball)
 {
     for(int i = ball.r; i > 0; i = i - 2)
     {
-        txSetColor(RGB(ball.clrR - ball.clrR * ball.r / i, ball.clrG - ball.clrG * ball.r / i, ball.clrB - ball.clrB * ball.r / i));
-        txSetFillColor(RGB(ball.clrR - ball.clrR * ball.r / i, ball.clrG - ball.clrG * ball.r / i, ball.clrB - ball.clrB * ball.r / i));
+        txSetColor(RGB(ball.clrR - ball.clrR * i / ball.r, ball.clrG - ball.clrG * i / ball.r, ball.clrB - ball.clrB * i / ball.r));
+        txSetFillColor(RGB(ball.clrR - ball.clrR * i / ball.r, ball.clrG - ball.clrG * i / ball.r, ball.clrB - ball.clrB * i / ball.r));
         txCircle(ball.x, ball.y, ball.r);
         txSetFillColor(RGB(0, 0, 0));
     }
