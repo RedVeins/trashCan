@@ -53,10 +53,19 @@ void clldBall(Ball* ball1, Ball* ball2)
 {
     if ((abs((*ball1).x - (*ball2).x) < (*ball1).r + (*ball2).r) and (abs((*ball1).y - (*ball2).y) < (*ball1).r + (*ball2).r))
     {
-        (*ball1).vx = - (*ball1).vx;
-        (*ball1).vy = - (*ball1).vy;
-        (*ball2).vx = - (*ball2).vx;
-        (*ball2).vy = - (*ball2).vy;
+        (*ball1).v = sqrt((*ball1).vx * (*ball1).vx + (*ball1).vy * (*ball1).vy);
+        (*ball2).v = sqrt((*ball2).vx * (*ball2).vx + (*ball2).vy * (*ball2).vy);
+        float cos1 = ((*ball1).vx * (*ball2).vx + (*ball1).vy * (*ball2).vy)/((*ball1).v * (*ball2).v);
+        if (((*ball1).vx > 0) and ((*ball2).vx > 0))
+        {
+            (*ball1).vy = - (*ball1).vy;
+            (*ball2).vy = - (*ball2).vy;
+        }
+        if (((*ball1).vy > 0) and ((*ball2).vy > 0))
+        {
+            (*ball1).vx = - (*ball1).vx;
+            (*ball2).vx = - (*ball2).vx;
+        }
     }
 }
 
