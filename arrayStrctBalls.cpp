@@ -11,6 +11,7 @@ struct Ball
     float y = 0;
     float vx = 0;
     float vy = 0;
+    float v = 0;
     float clrR = 0;
     float clrG = 0;
     float clrB = 0;
