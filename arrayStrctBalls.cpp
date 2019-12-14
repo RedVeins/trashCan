@@ -30,24 +30,12 @@ void newBall(Ball ball)
 
 void moveBall(Ball* ball)
 {
-    if ((*ball).y > (400 - (*ball).r) || (*ball).y < (*ball).r)
+    if ((*ball).y > (600 - (*ball).r) || (*ball).y < (*ball).r)
         (*ball).vy = - (*ball).vy;
-    if ((*ball).x > (600 - (*ball).r) || (*ball).x < (*ball).r)
+    if ((*ball).x > (800 - (*ball).r) || (*ball).x < (*ball).r)
         (*ball).vx = - (*ball).vx;
     (*ball).x += (*ball).vx * dt;
     (*ball).y += (*ball).vy * dt;
-}
-
-void cntrlBall(Ball* ball)
-{
-    if (GetAsyncKeyState(VK_LEFT))
-        (*ball).vx -= 0.05;
-    if (GetAsyncKeyState(VK_RIGHT))
-        (*ball).vx += 0.05;
-    if (GetAsyncKeyState(VK_UP))
-        (*ball).vy -= 0.05;
-    if (GetAsyncKeyState(VK_DOWN))
-        (*ball).vy += 0.05;
 }
 
 void clldBall(Ball* ball1, Ball* ball2)
@@ -58,25 +46,16 @@ void clldBall(Ball* ball1, Ball* ball2)
         (*ball2).v = sqrt((*ball2).vx * (*ball2).vx + (*ball2).vy * (*ball2).vy);
         float cos1 = ((*ball1).vx * (*ball2).vx + (*ball1).vy * (*ball2).vy)/((*ball1).v * (*ball2).v);
         
-        if ( ( ((*ball1).vx > 0) and ((*ball2).vx > 0) ) and ( (*ball1).vy * (*ball2).vy < 0 ) )
+        if ( ( ((*ball1).vx > 0) and ((*ball2).vx > 0) ) and ( (*ball1).vy * (*ball2).vy <= 0 ) )
         {
             (*ball1).vy = - (*ball1).vy;
             (*ball2).vy = - (*ball2).vy;
         }
 
-        if ( ((*ball1).vy > 0) and ((*ball2).vy > 0) and ( ( (*ball1).vx * (*ball2).vx < 0) ) )
+        if ( ((*ball1).vy > 0) and ((*ball2).vy > 0) and ( ( (*ball1).vx * (*ball2).vx <= 0) ) )
         {
             (*ball1).vx = - (*ball1).vx;
             (*ball2).vx = - (*ball2).vx;
-        }
-
-        if ( cos = 0 )
-        {
-            (*ball1).vx = - (*ball2).vx;
-            (*ball1).vy = - (*ball2).vy;
-            (*ball2).vx = (*ball1).vx;
-            (*ball2).vy = (*ball1).vy;
-
         }
     }
 }
@@ -86,7 +65,7 @@ int main()
 {
     srand(time(NULL));
 
-    txCreateWindow(600, 400);
+    txCreateWindow(800, 600);
 
     Ball *ball = new Ball[300];
     for (int i = 0; i < 15; i += 1)
