@@ -28,24 +28,24 @@ void newBall(Ball ball)
 
 void moveBall(Ball* ball, int wX, int wY)
 {
-    (*ball).(*pos).x += (*ball).(*vel).x * dt;
-    (*ball).(*pos).y += (*ball).(*vel).y * dt;
-    if ((*ball).(*pos).y > (wY - (*ball).r) or (*ball).(*pos).y < (*ball).r)
-        (*ball).(*vel).y = - (*ball).(*vel).y;
-    if ((*ball).(*pos).x > (wX - (*ball).r) or (*ball).(*pos).x < (*ball).r)
-        (*ball).(*vel).x = - (*ball).(*vel).x;
+    (*ball).pos.x += (*ball).vel.x * dt;
+    (*ball).pos.y += (*ball).vel.y * dt;
+    if ((*ball).pos.y > (wY - (*ball).r) or (*ball).pos.y < (*ball).r)
+        (*ball).vel.y = - (*ball).vel.y;
+    if ((*ball).pos.x > (wX - (*ball).r) or (*ball).pos.x < (*ball).r)
+        (*ball).vel.x = - (*ball).vel.x;
 }
 
 void collision(Ball* ball1, Ball* ball2)
 {
-    if ( ( abs((*ball1).(*pos).x - (*ball2).(*pos).x) < (2 * (*ball1).r) ) and ( abs((*ball1).(*pos).y - (*ball2).(*pos).y) < (2 * (*ball1).r) ) )
+    if ( ( abs((*ball1).pos.x - (*ball2).pos.x) < (2 * (*ball1).r) ) and ( abs((*ball1).pos.y - (*ball2).pos.y) < (2 * (*ball1).r) ) )
     {
         Vec center = sub((*ball1).pos, (*ball2).pos);
         Vec v1 = mul(norm(center), ((scal((*ball1).vel, center)) / len(center)));
         Vec v2 = mul(norm(center), ((scal((*ball2).vel, center)) / len(center)));
         
-        (*ball1).(*vel) = sub((*ball1).vel, v1);
-        (*ball2).(*vel) = sub((*ball2).vel, v2);        
+        (*ball1).vel = sub((*ball1).vel, v1);
+        (*ball2).vel = sub((*ball2).vel, v2);        
 }
 
 void clldBalls(Ball* ball, num)
