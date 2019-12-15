@@ -21,7 +21,7 @@ void newBall(Ball ball)
     {
         txSetColor(RGB(ball.clrR * (1 - i/ball.r), ball.clrG * (1 - i/ball.r), ball.clrB * (1 - i/ball.r)));
         txSetFillColor(RGB(ball.clrR * (1 - i/ball.r), ball.clrG * (1 - i/ball.r), ball.clrB * (1 - i/ball.r)));
-        txCircle(ball.x, ball.y, ball.r);
+        txCircle(ball.pos.x, ball.pos.y, ball.r);
         txSetFillColor(RGB(0, 0, 0));
     }
 }
