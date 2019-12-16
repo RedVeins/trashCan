@@ -2,8 +2,9 @@
 #include <ctime>
 #include "vec.h"
 
-const float dt = 1;
-const int vmax = 8;
+const float dt = 0.01;
+const int vmax = 200;
+const float eps = 0.001;
 
 struct Ball
 {
@@ -28,12 +29,30 @@ void newBall(Ball ball)
 
 void moveBall(Ball* ball, int wX, int wY)
 {
-    (*ball).pos.x += (*ball).vel.x * dt;
-    (*ball).pos.y += (*ball).vel.y * dt;
-    if ((*ball).pos.y > (wY - (*ball).r) or (*ball).pos.y < (*ball).r)
+    (*ball).pos = add((*ball).pos, mul((*ball).vel, dt));
+
+    if ((*ball).pos.y > (wY - (*ball).r))
+    {
+        (*ball).pos.y = wY - (*ball).r;
         (*ball).vel.y = - (*ball).vel.y;
-    if ((*ball).pos.x > (wX - (*ball).r) or (*ball).pos.x < (*ball).r)
+    }
+    if ((*ball).pos.y < (*ball).r)
+    {
+        (*ball).pos.y = (*ball).r;
+        (*ball).vel.y = - (*ball).vel.y;
+    }
+    if ((*ball).pos.x > (wX - (*ball).r))
+    {
+        (*ball).pos.x = wX - (*ball).r;
         (*ball).vel.x = - (*ball).vel.x;
+    }
+
+    if ((*ball).pos.x < (*ball).r)
+    {
+        (*ball).pos.x = (*ball).r;
+        (*ball).vel.x = - (*ball).vel.x;
+    }
+
 }
 
 void collision(Ball* ball1, Ball* ball2)
@@ -41,8 +60,12 @@ void collision(Ball* ball1, Ball* ball2)
     if ( abs(len(sub((*ball1).pos, (*ball2).pos)) < 2 * (*ball1).r) )
     {
         std::swap((*ball1).vel, (*ball2).vel);
+        float dist = len(sub((*ball1).pos, (*ball2).pos));
+        float h = (*ball1).r - dist/2;
+        Vec delta = mul(norm(sub((*ball1).pos, (*ball2).pos)), h);
+        (*ball1).pos = add((*ball1).pos, delta);
+        (*ball2).pos = add((*ball2).pos, delta);
     }
-
 }
 
 void clldBalls(Ball* ball, int num)
@@ -81,9 +104,9 @@ void array(Ball* ball, int num, float wX, float wY)
 
 int main()
 {
-    float wX = 800;
-    float wY = 600;
-    int num = 300;
+    float wX = 300;
+    float wY = 300;
+    int num = 25;
 
     txCreateWindow(wX, wY);
 
