@@ -46,6 +46,7 @@ void collision(Ball* ball1, Ball* ball2)
         
         (*ball1).vel = sub((*ball1).vel, v1);
         (*ball2).vel = sub((*ball2).vel, v2);        
+    }
 }
 
 void clldBalls(Ball* ball, num)
@@ -55,7 +56,7 @@ void clldBalls(Ball* ball, num)
         for (int j = 0; j < num; j++)
         {
            if (i != j)
-              CollideBall(&ball[i], &ball[j]);
+              collision(&ball[i], &ball[j]);
         }
     }  
 }
@@ -82,8 +83,8 @@ void array(Ball* ball, int num)
 int main()
 {
     float wX = 800;
-    float xY = 600;
-    num = 300;
+    float wY = 600;
+    int num = 300;
     
     txCreateWindow(wX, wY);
 
@@ -98,7 +99,7 @@ int main()
         for (int i = 0; i < 15; i += 1)
         {
             newBall(ball[i]);
-            moveBall(&ball[i]);
+            moveBall(&ball[i], wX, wY);
             txSetFillColor(RGB(0, 0, 0));
         }
         clldBalls(ball, num);
