@@ -38,30 +38,19 @@ void moveBall(Ball* ball, int wX, int wY)
 
 void collision(Ball* ball1, Ball* ball2)
 {
-    if ( sub((*ball1).pos, (*ball2).pos) == 2 * (*ball1).r )
+    if ( abs(len(sub((*ball1).pos, (*ball2).pos)) < 2 * (*ball1).r) )
     {
-        Vec center = sub((*ball1).pos, (*ball2).pos);
-        Vec v1proect = mul(norm(center), ((scal((*ball1).vel, center)) / len(center)));
-        Vec v2proect = mul(norm(center), ((scal((*ball2).vel, center)) / len(center)));
-
-        (*ball1).vel = sub((*ball1).vel, v1proect);
-        (*ball2).vel = sub((*ball2).vel, v2proect);
-
-        if (len(center) < (*ball1).r + (*ball2).r)
-        {
-            (*ball1).pos = add((*ball2).pos, mul(norm(center), ((*ball1).r + (*ball2).r - len(center)/2)));
-            (*ball2).pos = sub((*ball1).pos, mul(norm(center), ((*ball1).r + (*ball2).r - len(center)/2)));
-        }
+        std::swap((*ball1).vel, (*ball2).vel);
     }
+
 }
 
 void clldBalls(Ball* ball, int num)
 {
     for (int i = 0; i < num; i++)
     {
-        for (int j = 0; j < num; j++)
+        for (int j = i + 1; j < num; j++)
         {
-           if (i != j)
               collision(&ball[i], &ball[j]);
         }
     }
