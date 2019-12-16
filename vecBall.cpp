@@ -41,41 +41,51 @@ void collision(Ball* ball1, Ball* ball2)
     if ( ( abs((*ball1).pos.x - (*ball2).pos.x) < (2 * (*ball1).r) ) and ( abs((*ball1).pos.y - (*ball2).pos.y) < (2 * (*ball1).r) ) )
     {
         Vec center = sub((*ball1).pos, (*ball2).pos);
-        Vec v1 = mul(norm(center), ((scal((*ball1).vel, center)) / len(center)));
-        Vec v2 = mul(norm(center), ((scal((*ball2).vel, center)) / len(center)));
-        
-        (*ball1).vel = sub((*ball1).vel, v1);
-        (*ball2).vel = sub((*ball2).vel, v2);        
+        Vec v1proect = mul(norm(center), ((scal((*ball1).vel, center)) / len(center)));
+        Vec v2proect = mul(norm(center), ((scal((*ball2).vel, center)) / len(center)));
+
+        (*ball1).vel = sub((*ball1).vel, v1proect);
+        (*ball2).vel = sub((*ball2).vel, v2proect);
+
+        if (len(center) < (*ball1).r + (*ball2).r)
+        {
+            (*ball1).pos = add((*ball2).pos, mul(norm(center), ((*ball1).r + (*ball2).r - len(center)/2)));
+            (*ball2).pos = sub((*ball1).pos, mul(norm(center), ((*ball1).r + (*ball2).r - len(center)/2)));
+        }
     }
 }
 
-void clldBalls(Ball* ball, num)
+void clldBalls(Ball* ball, int num)
 {
-  for (int i = 0; i < num; i++)
+    for (int i = 0; i < num; i++)
     {
         for (int j = 0; j < num; j++)
         {
            if (i != j)
               collision(&ball[i], &ball[j]);
         }
-    }  
+    }
 }
 
-void array(Ball* ball, int num)
+void array(Ball* ball, int num, float wX, float wY)
 {
     srand(time(NULL));
-    for (int i = 0; i < num/20; i += 1)
+    float radius = 8;
+    float x = radius * 3, y = radius * 3;
+    for (int i = 0; i < num; i++)
     {
-        for (int j = 1; j < 20; j += 1)
-        {
-            ball[i * (num/20) + j - 1].r = 8;
-            ball[i * (num/20) + j - 1].pos.x = (j + 1) * 45;
-            ball[i * (num/20) + j - 1].pos.y = (i + 1) * 35;
-            ball[i * (num/20) + j - 1].vel.x = rand() % vmax;
-            ball[i * (num/20) + j - 1].vel.y = rand() % vmax;
-            ball[i * (num/20) + j - 1].clrR = (rand() % vmax) * 50;
-            ball[i * (num/20) + j - 1].clrG = 0;
-            ball[i * (num/20) + j - 1].clrB = 250;
+        ball[i].r = radius;
+        ball[i].pos.x = x;
+        ball[i].pos.y = y;
+        ball[i].vel.x = rand() % vmax;
+        ball[i].vel.y = rand() % vmax;
+        ball[i].clrR = (rand() % vmax) * 50;
+        ball[i].clrG = 0;
+        ball[i].clrB = 250;
+        x += 5 * radius;
+        if (x + radius >= wX) {
+            x = 3 * radius;
+            y += 5 * radius;
         }
     }
 }
@@ -85,18 +95,18 @@ int main()
     float wX = 800;
     float wY = 600;
     int num = 300;
-    
+
     txCreateWindow(wX, wY);
 
     Ball *ball = new Ball[num];
-    array(ball, num);
+    array(ball, num, wX, wY);
 
     for (;;)
     {
         txBegin();
         txClear();
 
-        for (int i = 0; i < 15; i += 1)
+        for (int i = 0; i < num; i += 1)
         {
             newBall(ball[i]);
             moveBall(&ball[i], wX, wY);
@@ -107,7 +117,7 @@ int main()
         txSleep(dt);
         txEnd();
     }
-    
+
     delete[] ball;
 
     return 0;
