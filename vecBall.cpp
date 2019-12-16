@@ -38,7 +38,7 @@ void moveBall(Ball* ball, int wX, int wY)
 
 void collision(Ball* ball1, Ball* ball2)
 {
-    if ( ( abs((*ball1).pos.x - (*ball2).pos.x) < (2 * (*ball1).r) ) and ( abs((*ball1).pos.y - (*ball2).pos.y) < (2 * (*ball1).r) ) )
+    if ( sub((*ball1).pos, (*ball2).pos) == 2 * (*ball1).r )
     {
         Vec center = sub((*ball1).pos, (*ball2).pos);
         Vec v1proect = mul(norm(center), ((scal((*ball1).vel, center)) / len(center)));
