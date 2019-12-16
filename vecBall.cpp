@@ -4,7 +4,6 @@
 
 const float dt = 0.01;
 const int vmax = 200;
-const float eps = 0.001;
 
 struct Ball
 {
